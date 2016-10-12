@@ -4,19 +4,15 @@ baremodule Domain
 end
 
 type Term
-    domain
-    description
-    standard_name
-    alternative_names
+    domain::Symbol
+    description::String
+    standard_name::Symbol
+    alternative_names::Array{Symbol,1}
 end
 
 terms = Term[]
-addterm(x) = push!(terms, x)
+addterm(x) = begin push!(terms, x); x end
 
 macro term(domain, desc, name, altnames)
     :( addterm( Term($domain, $desc, $name, $altnames) ) )
 end
-
-@term Domain.Optimization "Absolute tolerance" "abstol" ["atol","abs_tol"]
-
-@term Domain.Optimization "SolidString" "SolidString" ["SolidString_","abs_tol"]
